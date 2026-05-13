@@ -28,7 +28,7 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
     <div class="block mb-4 sm:mb-8 px-4 sm:px-0 pt-4 sm:pt-0">
       <a href={`${basePath}/products`} class="text-sm text-gray-500 hover:text-brand-gold transition uppercase tracking-wider font-semibold">&larr; Back to Shop</a>
     </div>
-    
+
     <div class="flex flex-col md:flex-row gap-6 sm:gap-12 lg:gap-24">
       {/* Image Gallery */}
       <div class="md:w-1/2">
@@ -71,14 +71,14 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
         </div>
         <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl text-brand-dark mb-3 sm:mb-4 leading-tight">{product.title}</h1>
         <div class="text-2xl sm:text-3xl font-semibold text-brand-dark mb-6">₹{product.price.toLocaleString('en-IN')}</div>
-        
+
         <div class="prose prose-sm sm:prose-base text-gray-600 mb-8 leading-relaxed">
           <p>{product.description || "No description provided."}</p>
         </div>
 
         <div class="mb-8 space-y-2">
           <div class="text-sm text-gray-500 flex items-center">
-            <span class="w-24">SKU:</span> 
+            <span class="w-24">SKU:</span>
             <span class="text-brand-dark font-medium">{product.sku}</span>
           </div>
           <div class="text-sm text-gray-500 flex items-center">
@@ -101,10 +101,10 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
             </a>
           )}
         </div>
-        
+
         <div class="mt-8 pt-8 border-t border-gray-100 mb-32 sm:mb-0">
           <h3 class="text-sm font-bold text-brand-dark uppercase tracking-wider mb-3">Shipping & Returns</h3>
-          <p class="text-xs sm:text-sm text-gray-500 mb-2">Free shipping on orders over ₹5,000.</p>
+          <p class="text-xs sm:text-sm text-gray-500 mb-2">Free shipping on orders over ₹1,000.</p>
           <p class="text-xs sm:text-sm text-gray-500">For inquiries, please use the WhatsApp button above.</p>
         </div>
       </div>

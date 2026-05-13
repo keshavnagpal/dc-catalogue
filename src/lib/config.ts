@@ -2,7 +2,5 @@ export const PRODUCTS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-
 export const WHATSAPP_NUMBER = "919999999999";
 export const BRAND_NAME = "Dhwani Collection";
 
-// jsDelivr CDN Configuration
-export const GITHUB_USER = "kplusn";
-export const GITHUB_REPO = "dc-catalogue";
-export const GITHUB_BRANCH = "main";
+export const INSTAGRAM_USERNAME = "info.dhwanicollection"
+export const FACEBOOK_USERNAME = "info.dhwanicollection"

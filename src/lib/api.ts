@@ -1,7 +1,7 @@
 import Papa from 'papaparse';
 import fs from 'node:fs';
 import path from 'node:path';
-import { PRODUCTS_CSV_URL, GITHUB_USER, GITHUB_REPO, GITHUB_BRANCH } from './config';
+import { PRODUCTS_CSV_URL } from './config';
 import type { Product } from './types';
 
 export async function fetchProducts(): Promise<Product[]> {
@@ -62,7 +62,7 @@ export async function fetchProducts(): Promise<Product[]> {
 export function discoverImagesForSKU(sku: string): string[] {
   if (!sku) return [];
   const imagesDir = path.join(process.cwd(), 'public', 'images', 'products', sku);
-  
+
   if (!fs.existsSync(imagesDir)) {
     return [];
   }
@@ -70,7 +70,7 @@ export function discoverImagesForSKU(sku: string): string[] {
   try {
     const files = fs.readdirSync(imagesDir);
     const validExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
-    
+
     return files
       .filter(file => validExtensions.includes(path.extname(file).toLowerCase()))
       .sort() // Ensure consistent ordering

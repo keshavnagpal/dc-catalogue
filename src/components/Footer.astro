@@ -1,13 +1,13 @@
 ---
-import { BRAND_NAME } from '../lib/config';
+import { BRAND_NAME, INSTAGRAM_USERNAME, FACEBOOK_USERNAME } from '../lib/config';
 const currentYear = new Date().getFullYear();
 const basePath = import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_URL;
 ---
 
 <footer class="bg-white border-t border-gray-100 mt-16">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+      <div class="col-span-2 md:col-span-1">
         <h3 class="font-serif text-xl font-bold text-brand-dark mb-4">{BRAND_NAME}</h3>
         <p class="text-gray-500 text-sm max-w-xs">
           Premium artificial jewellery catalogue. Discover our exquisite collection of bridal sets, necklaces, and more.
@@ -24,11 +24,14 @@ const basePath = import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_UR
       </div>
       <div>
         <h4 class="font-medium text-brand-dark mb-4 uppercase tracking-wider text-sm">Connect</h4>
-        <ul class="space-y-2 text-sm text-gray-500">
-          <li><a href="#" class="hover:text-brand-gold transition">Instagram</a></li>
-          <li><a href="#" class="hover:text-brand-gold transition">Facebook</a></li>
-          <li><a href="#" class="hover:text-brand-gold transition">WhatsApp</a></li>
-        </ul>
+        <div class="flex gap-5">
+          <a href={`https://www.instagram.com/${INSTAGRAM_USERNAME}`} class="text-gray-400 hover:text-brand-gold transition-colors transform hover:scale-110" aria-label="Instagram">
+            <img src={`${basePath}/images/instagram.svg`} alt="Instagram" class="w-6 h-6" />
+          </a>
+          <a href={`https://www.facebook.com/${FACEBOOK_USERNAME}`} class="text-gray-400 hover:text-brand-gold transition-colors transform hover:scale-110" aria-label="Facebook">
+            <img src={`${basePath}/images/facebook.svg`} alt="Facebook" class="w-6 h-6" />
+          </a>
+        </div>
       </div>
     </div>
     <div class="border-t border-gray-100 mt-12 pt-8 text-center">

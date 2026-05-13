@@ -1,0 +1,65 @@
+---
+import type { Product } from '../lib/types';
+import { WHATSAPP_NUMBER } from '../lib/config';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const basePath = import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_URL;
+
+// Don't prepend basePath if the image is an absolute URL (like from jsDelivr)
+const getImageUrl = (img: string) => img.startsWith('http') ? img : `${basePath}${img}`;
+const primaryImage = product.images.length > 0 ? getImageUrl(product.images[0]) : `${basePath}/images/placeholder.jpg`;
+
+const isSoldOut = product.stock <= 0;
+const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi I want to order SKU ${product.sku}`)}`;
+---
+
+<div class="group relative flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100/50 active:scale-[0.98] sm:active:scale-100">
+  <a href={`${basePath}/products/${product.sku}`} class="relative block overflow-hidden aspect-square sm:aspect-[4/5] bg-gray-50">
+    <img 
+      src={primaryImage} 
+      alt={product.title} 
+      class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out"
+      loading="lazy"
+    />
+    {isSoldOut && (
+      <div class="absolute inset-0 bg-white/60 backdrop-blur-[2px] flex items-center justify-center z-10">
+        <span class="bg-brand-dark/90 text-white px-5 py-2 text-xs font-bold tracking-widest uppercase rounded-full shadow-lg">
+          Sold Out
+        </span>
+      </div>
+    )}
+    {product.featured && !isSoldOut && (
+      <div class="absolute top-3 right-3 z-10">
+        <span class="bg-brand-gold/90 backdrop-blur-md text-white text-[10px] px-3 py-1.5 uppercase tracking-widest font-semibold rounded-full shadow-sm">
+          Featured
+        </span>
+      </div>
+    )}
+  </a>
+  <div class="p-4 sm:p-5 flex flex-col flex-grow">
+    <div class="mb-1">
+      <span class="text-[10px] sm:text-xs text-brand-gold uppercase tracking-widest font-medium">{product.category}</span>
+    </div>
+    <a href={`${basePath}/products/${product.sku}`} class="font-serif text-base sm:text-lg text-brand-dark hover:text-brand-gold transition line-clamp-2 leading-snug mb-3 sm:mb-4">
+      {product.title}
+    </a>
+    
+    <div class="mt-auto flex items-center justify-between pt-2">
+      <span class="text-base sm:text-lg font-semibold text-brand-dark">₹{product.price.toLocaleString('en-IN')}</span>
+      
+      {isSoldOut ? (
+        <button disabled class="opacity-50 cursor-not-allowed bg-gray-100 text-gray-400 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs uppercase tracking-wider font-bold">
+          Inquire
+        </button>
+      ) : (
+        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="bg-brand-dark text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs uppercase tracking-wider font-bold hover:bg-brand-gold hover:shadow-md transition-all active:bg-brand-gold/80">
+          Inquire
+        </a>
+      )}
+    </div>
+  </div>
+</div>

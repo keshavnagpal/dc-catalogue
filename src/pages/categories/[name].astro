@@ -1,0 +1,46 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { fetchProducts } from '../../lib/api';
+
+export async function getStaticPaths() {
+  const products = await fetchProducts();
+  const categories = Array.from(new Set(products.map(p => p.category)));
+  
+  return categories.map(category => ({
+    params: { name: category },
+    props: { products: products.filter(p => p.category === category && p.status === 'active') },
+  }));
+}
+
+const { name } = Astro.params;
+const { products } = Astro.props;
+const basePath = import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_URL;
+---
+
+<Layout title={`${name} Jewellery`} description={`Browse our premium collection of ${name} jewellery.`}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+    <div class="text-center mb-8 sm:mb-12">
+      <h1 class="font-serif text-3xl sm:text-4xl text-brand-dark mb-2 sm:mb-4">{name} Collection</h1>
+      <p class="text-gray-500 uppercase tracking-widest text-xs sm:text-sm">
+        {products.length} {products.length === 1 ? 'Piece' : 'Pieces'}
+      </p>
+    </div>
+
+    <div class="mb-8 sm:mb-12 text-center">
+      <a href={`${basePath}/products`} class="text-xs sm:text-sm text-gray-500 hover:text-brand-gold transition uppercase tracking-wider font-bold">&larr; Back to Shop</a>
+    </div>
+
+    {products.length > 0 ? (
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8">
+        {products.map(product => (
+          <ProductCard product={product} />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-20 text-gray-500 text-sm sm:text-base">
+        No products available in this category.
+      </div>
+    )}
+  </div>
+</Layout>

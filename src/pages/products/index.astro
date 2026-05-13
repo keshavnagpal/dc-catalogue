@@ -1,0 +1,60 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { fetchProducts } from '../../lib/api';
+
+const products = await fetchProducts();
+const activeProducts = products.filter(p => p.status === 'active');
+
+// Simple categories extraction for filters
+const categories = Array.from(new Set(activeProducts.map(p => p.category))).sort();
+const basePath = import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_URL;
+---
+
+<Layout title="All Products" description="Browse our complete collection of premium artificial jewellery.">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+    <div class="text-center mb-8 sm:mb-12">
+      <h1 class="font-serif text-3xl sm:text-4xl text-brand-dark mb-2 sm:mb-4">All Pieces</h1>
+      <p class="text-gray-500 text-sm sm:text-base max-w-2xl mx-auto px-4 sm:px-0 text-balance">
+        Explore our entire catalog of finely crafted jewellery.
+      </p>
+    </div>
+
+    {/* Filter Navigation - Horizontally scrollable on mobile */}
+    <div class="flex overflow-x-auto pb-4 sm:pb-0 mb-8 sm:mb-12 gap-3 sm:gap-4 snap-x snap-mandatory hide-scrollbar justify-start sm:justify-center px-2 sm:px-0">
+      <a href={`${basePath}/products`} class="snap-start shrink-0 px-5 sm:px-6 py-2 bg-brand-dark text-white rounded-full text-xs sm:text-sm uppercase tracking-wider font-bold shadow-md">
+        All
+      </a>
+      {categories.map(cat => (
+        <a href={`${basePath}/categories/${cat}`} class="snap-start shrink-0 px-5 sm:px-6 py-2 bg-white border border-gray-200 text-gray-600 hover:border-brand-gold hover:text-brand-gold rounded-full text-xs sm:text-sm uppercase tracking-wider font-bold transition shadow-sm hover:shadow-md">
+          {cat}
+        </a>
+      ))}
+    </div>
+
+    {/* Product Grid - 2 columns on mobile */}
+    {activeProducts.length > 0 ? (
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8">
+        {activeProducts.map(product => (
+          <ProductCard product={product} />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-20 text-gray-500 text-sm sm:text-base">
+        No products available at the moment. Please check back later.
+      </div>
+    )}
+  </div>
+</Layout>
+
+<style>
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+</style>

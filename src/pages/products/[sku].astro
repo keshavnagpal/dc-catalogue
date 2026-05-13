@@ -50,8 +50,15 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
               )
             })
           ) : (
-            <div class="w-full shrink-0 snap-start bg-gray-100 sm:rounded-2xl flex items-center justify-center aspect-square sm:aspect-[4/5] text-gray-400">
-              No images available
+            <div class="w-full shrink-0 snap-start bg-gray-50 sm:rounded-2xl overflow-hidden sm:border border-gray-100 aspect-square sm:aspect-[4/5] relative">
+              {isSoldOut && (
+                <div class="absolute inset-0 bg-white/60 backdrop-blur-[2px] flex items-center justify-center z-10">
+                  <span class="bg-brand-dark/90 text-white px-6 py-2.5 text-sm font-bold tracking-widest uppercase rounded-full shadow-lg">
+                    Sold Out
+                  </span>
+                </div>
+              )}
+              <img src={`${basePath}/images/placeholder.jpg`} alt="No image available" class="w-full h-full object-cover opacity-80" />
             </div>
           )}
         </div>
@@ -83,16 +90,13 @@ const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent
         </div>
 
         {/* Action Button - Sticky on mobile bottom, normal on desktop */}
-        <div 
-          class="fixed bottom-0 left-0 right-0 px-5 pt-4 pb-6 sm:static sm:p-0 z-50 pointer-events-none sm:pointer-events-auto"
-          style="padding-bottom: max(1.5rem, env(safe-area-inset-bottom));"
-        >
+        <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm sm:static sm:translate-x-0 sm:w-full sm:max-w-none z-50 pointer-events-none sm:pointer-events-auto">
           {isSoldOut ? (
-            <button disabled class="pointer-events-auto w-full bg-gray-200/95 backdrop-blur-sm text-gray-500 py-4 sm:py-5 rounded-full text-sm uppercase tracking-widest font-bold cursor-not-allowed shadow-xl">
+            <button disabled class="pointer-events-auto w-full bg-gray-200 text-gray-500 py-4 rounded-full text-sm uppercase tracking-widest font-bold cursor-not-allowed shadow-xl">
               Currently Unavailable
             </button>
           ) : (
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="pointer-events-auto block w-full text-center bg-brand-dark/95 backdrop-blur-sm text-white py-4 sm:py-5 rounded-full text-sm uppercase tracking-widest font-bold hover:bg-brand-gold transition shadow-2xl hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] active:scale-[0.98]">
+            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" class="pointer-events-auto block w-full text-center bg-brand-dark text-white py-4 rounded-full text-sm uppercase tracking-widest font-bold hover:bg-brand-gold transition shadow-[0_8px_30px_rgba(0,0,0,0.2)] active:scale-[0.98]">
               Order via WhatsApp
             </a>
           )}

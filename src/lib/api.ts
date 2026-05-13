@@ -75,12 +75,7 @@ export function discoverImagesForSKU(sku: string): string[] {
       .filter(file => validExtensions.includes(path.extname(file).toLowerCase()))
       .sort() // Ensure consistent ordering
       .map(file => {
-        // Construct jsDelivr URL
-        if (GITHUB_USER.includes('REPLACE_WITH')) {
-           // Fallback to local path if GitHub config is not set up
-           return `/images/products/${sku}/${file}`;
-        }
-        return `https://cdn.jsdelivr.net/gh/${GITHUB_USER}/${GITHUB_REPO}@${GITHUB_BRANCH}/public/images/products/${sku}/${file}`;
+        return `/images/products/${sku}/${file}`;
       });
   } catch (error) {
     console.error(`Error reading images for SKU ${sku}:`, error);
